@@ -1,0 +1,30 @@
+body, html {
+    background-color:#444;
+}
+
+#cr-stage {
+    margin:0 auto;
+    margin-bottom: 30px;
+}
+
+#instructions {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+#footer, #footer a {
+    background-color: #555;
+    border-color: #555;
+    color: #999;
+}
+
+#header {
+    height: 40px;
+}
+
+#header, #header a {
+    background-color: #333;
+    border-color: #333;
+    color: #bbb;
+}

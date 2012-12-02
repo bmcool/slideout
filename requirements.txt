@@ -1,0 +1,9 @@
+Django==1.4.2
+Mezzanine==1.2.4
+South==0.7.6
+django-jsonify==0.2.1
+mysql-python==1.2.3
+ipython==0.13.1
+PIL==1.1.7
+django-jsonfield==0.8.12
+django-pipeline==1.2.21

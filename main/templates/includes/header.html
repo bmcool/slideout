@@ -1,0 +1,29 @@
+{% load i18n %}
+
+<div id="header">
+    <div class="row-fluid">
+        <div class="span2">
+            <div class="navbar">
+                <a class="brand" href="/">Slide Out</a>
+            </div>
+        </div>
+        <div class="span10">
+            <div class="navbar pull-right">
+                <ul class="nav">
+                {% if request.user.is_authenticated %}
+                    <li><a>{% trans "Welcome," %}{% filter force_escape %}{% firstof user.first_name user.username %}{% endfilter %}</a></li>
+                    <li><a href="/logout/">{% trans "Log out" %}</a></li>
+                {% else %}
+                    <li><a>{% trans "Do you want to create your slide out ?" %}</a></li>
+                    <li><a href="{% url signup %}?next={{ request.path }}" >{% trans "Sign up" %}</a></li>
+                {% endif %}
+                
+                {% if request.user.is_superuser %}
+                    <li><a href="/admin/">{% trans "Admin" %}</a></li>
+                {% endif %}
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

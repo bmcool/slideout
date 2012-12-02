@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{% load pages_tags mezzanine_tags i18n %}
+<html>
+<head>
+
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+<meta name="description" content="{% block meta_description %}{% endblock %}">
+<title>{{ settings.SITE_TITLE }}</title>
+
+{% compress css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.responsive.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/mezzanine.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/main.css">
+{% block extra_css %}{% endblock %}
+{% endcompress %}
+
+{% compress js %}
+<title>Slide Out</title>
+<script src="{{ STATIC_URL }}mezzanine/js/{{ settings.JQUERY_FILENAME }}" type="text/javascript" charset="utf-8"></script>
+<script src="{{ STATIC_URL }}js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ STATIC_URL }}js/crafty-min.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ STATIC_URL }}js/game.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ STATIC_URL }}js/main.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+</script>
+{% block extra_js %}{% endblock %}
+{% endcompress %}
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body id="{% block body_id %}body{% endblock %}">
+{% include "includes/header.html" %}
+<div class="container">
+    <div class="row">
+        <div class="span3 left">
+            {% block left_panel %}{% endblock %}
+        </div>
+        <div class="span6 middle">
+            {% block main %}{% endblock %}
+        </div>
+        <div class="span3 right">
+            <div class="panel">
+                {% if request.user.is_authenticated %}
+                    <li><a>{% trans "Welcome," %}{% filter force_escape %}{% firstof user.first_name user.username %}{% endfilter %}</a></li>
+                    <li><a href="/logout/">{% trans "Log out" %}</a></li>
+                {% else %}
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-error">
+                    {% for error in form.non_field_errors %}
+                    <p class="errornote">{{ error }}</p>
+                    {% endfor %}
+                    </div>
+                    {% endif %}
+                    <form id="login-form" action="/login/" method="post">
+                        {% csrf_token %}
+                        <div id="content-main">
+                            <div class="form-row">
+                                <label for="id_username" class="required">{% trans "Username or email:" %}</label>
+                                <input type="text" required name="username" id="id_username" value="{{ request.POST.username }}" />
+                            </div>
+                            <div class="form-row">
+                                <label for="id_password" class="required">{% trans "Password:" %}</label>
+                                <input type="password" required name="password" id="id_password" />
+                                <input type="hidden" name="this_is_the_login_form" value="1" />
+                            </div>
+                        </div>
+                        <button class="btn btn-primary">{% trans "Log in" %}</button>
+                    </form>
+                {% endif %}
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">{% include "includes/footer.html" %}</div>
+</body>
+</html>
