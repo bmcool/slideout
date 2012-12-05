@@ -6,6 +6,8 @@ from mezzanine.conf import settings
 
 from order.models import *
 
+from xml.etree.ElementTree import ElementTree
+
 import uuid
 import time
 
@@ -32,6 +34,59 @@ class Level(OrderedModel):
     
     def __unicode__(self):
         return self.title
+    
+    def _normalize_type_attribute(self, attr):
+        try:
+            return int(attr)
+        except ValueError:
+            if attr == "True":
+                return True
+            elif attr == "False":
+                return False
+            else:
+                return attr
+    
+    def _get_attributes_data(self, node):
+        attributes = dict()
+        for name, attr in node.items():
+            attribute = self._normalize_type_attribute(attr)
+            attributes.update({name:attribute})
+        return attributes
+    
+    @property
+    def lvl(self):
+        lvl = dict()
+        
+        xmltree = ElementTree()
+        xmltree.parse(self.level.path)
+        
+        lvl.update(self._get_attributes_data(xmltree.getroot()))
+        
+        layers = list()
+        for layer_node in xmltree.findall('layer'):
+            layer = dict()
+            layer.update(self._get_attributes_data(layer_node))
+            
+            data = list()
+            for tile in layer_node.findall('data/tile'):
+                data.append(self._normalize_type_attribute(tile.get('gid')))
+            layer["data"] = data
+            layer["type"] = "tilelayer"
+            layers.append(layer)
+        
+        for objectgroup_node in xmltree.findall('objectgroup'):
+            objectgroup = dict()
+            objectgroup.update(self._get_attributes_data(objectgroup_node))
+            
+            objects = list()
+            for object in objectgroup_node.findall('object'):
+                objects.append(self._get_attributes_data(object))
+            objectgroup["objects"] = objects
+            objectgroup["type"] = "objectgroup"
+            layers.append(objectgroup)
+                
+        lvl["layers"] = layers
+        return lvl
 
 # def sprite_upload_to(instance, filename):
     # return "%s/%s/%s/%s.%s" % ("resource", instance.owner.user.username, "sprites", str(time.time), str(uuid.uuid4()))
