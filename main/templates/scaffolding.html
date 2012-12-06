@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-{% load pages_tags mezzanine_tags i18n %}
+{% load main_tags mezzanine_tags i18n %}
 <html>
 <head>
 
@@ -22,7 +22,6 @@
 <script src="{{ STATIC_URL }}mezzanine/js/{{ settings.JQUERY_FILENAME }}" type="text/javascript" charset="utf-8"></script>
 <script src="{{ STATIC_URL }}js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="{{ STATIC_URL }}js/crafty-min.js" type="text/javascript" charset="utf-8"></script>
-<script src="{{ STATIC_URL }}js/game.js" type="text/javascript" charset="utf-8"></script>
 <script src="{{ STATIC_URL }}js/main.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 </script>
@@ -37,41 +36,19 @@
 <div class="container">
     <div class="row">
         <div class="span3 left">
-            {% block left_panel %}{% endblock %}
+            <div class="panel">
+            {% get_all_members_for as members %}
+            {% for member in members %}
+                <a href="/game/{{ member.user.username }}/">{{ member.user.username }}</a>
+            {% endfor %}
+            </div>
         </div>
         <div class="span6 middle">
             {% block main %}{% endblock %}
         </div>
         <div class="span3 right">
             <div class="panel">
-                {% if request.user.is_authenticated %}
-                    <li><a>{% trans "Welcome," %}{% filter force_escape %}{% firstof user.first_name user.username %}{% endfilter %}</a></li>
-                    <li><a href="/logout/">{% trans "Log out" %}</a></li>
-                {% else %}
-                    {% if form.non_field_errors %}
-                    <div class="alert alert-error">
-                    {% for error in form.non_field_errors %}
-                    <p class="errornote">{{ error }}</p>
-                    {% endfor %}
-                    </div>
-                    {% endif %}
-                    <form id="login-form" action="/login/" method="post">
-                        {% csrf_token %}
-                        <div id="content-main">
-                            <div class="form-row">
-                                <label for="id_username" class="required">{% trans "Username or email:" %}</label>
-                                <input type="text" required name="username" id="id_username" value="{{ request.POST.username }}" />
-                            </div>
-                            <div class="form-row">
-                                <label for="id_password" class="required">{% trans "Password:" %}</label>
-                                <input type="password" required name="password" id="id_password" />
-                                <input type="hidden" name="this_is_the_login_form" value="1" />
-                            </div>
-                        </div>
-                        <button class="btn btn-primary">{% trans "Log in" %}</button>
-                    </form>
-                {% endif %}
-                
+                {% block right_panel %}{% endblock %}
             </div>
         </div>
     </div>

@@ -60,7 +60,7 @@
             exit = Crafty("Exit");
             if (exit.x == this.x && exit.y == this.y) {
                 this.StopSlide();
-                nextLevel();
+                Crafty.scene("victory");
             }
         },
         
@@ -174,14 +174,11 @@
             "text-align": "center",
             "color": "#FFF"
         });
-        
-        // setHash("done");
     });
-        
+    
     generateWorld = function() {
         generateboundaries();
         
-        // setHash(_level);
         floor_layer = getLayer("floor");
         soild_layer = getLayer("soild");
         item_layer = getLayer("item");
@@ -293,7 +290,6 @@
     }
     
     main = function() {
-        _level = 0;
         generateSprites("/static/official/sprites/default.png");
         Crafty.audio.add("normal", "/static/official/sounds/normal.mp3");
         Crafty.audio.play("normal", -1);
@@ -303,32 +299,7 @@
     };
     
     restartLevel = function() {
-        if (_level != -1) {
-            Crafty.scene("level");
-        }
-    }
-    
-    goLevel = function(lvl) {
-        _level = lvl;
-        $.ajax({
-            url: "/static/official/levels/level" + _level + ".json",
-            cache: false,
-            async: false,
-            success: function(data) {
-                level = data;
-                Crafty.scene("level");
-            },
-            error: function(xhr) {
-                _level = -1;
-                Crafty.scene("victory");
-            }
-        });
-    }
-    
-    nextLevel = function() {
-        if (_level != -1) {
-            goLevel(parseInt(_level) + 1);
-        }
+        Crafty.scene("level");
     }
     
     Crafty.scene("loading", function() {
@@ -345,27 +316,8 @@
             "color": "#FFF"
         });
         
-        nextLevel();
+        Crafty.scene("level");
     });
-    
-    // setHash = function(hash) {
-        // unbindHashListener();
-        // window.location.hash = "" + hash;
-        // setTimeout(bindHashListener, 0);
-    // }
-    
-    // hashLoad = function() {
-        // hash = window.location.hash.substring(1);
-        // goLevel(hash);
-    // };
-    
-    // unbindHashListener = function() {
-        // Crafty.removeEvent(this, window, "hashchange", hashLoad);
-    // };
-    
-    // bindHashListener = function() {
-        // Crafty.addEvent(this, window, "hashchange", hashLoad);
-    // };
     
     window.onload = main;
 }).call(this);

@@ -1,0 +1,24 @@
+{% extends "scaffolding.html" %}
+{% load i18n jsonify %}
+
+{% block extra_css %}
+{% endblock %}            
+
+{% block extra_js %}
+<script src="{{ STATIC_URL }}js/game.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    var level = {{ level.lvl|jsonify }};
+</script>
+{% endblock %}
+
+{% block main %}
+{{ level.title }}
+<div id="cr-stage"></div>
+<div id="instructions">
+    <span class="label">Arrow keys</span> or <span class="label">WASD</span> for movement. <span class="label">R</span> to restart the level. <span class="label">Z</span> to mute the music.
+</div>
+{% endblock %}
+
+{% block right_panel %}
+<span class="label">{{ level.description }}</span>
+{% endblock %}

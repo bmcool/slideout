@@ -8,7 +8,12 @@
 {% endblock %}
 
 {% block main %}
-This is Homepage
+<h1>{{ current_member.user.username }}</h1>
+{% for level in levels %}
+<a href="/game/{{ current_member.user.username }}/{{ level.id }}/">{{ level.title }}</a>
+{% empty %}
+<div class="alert">No Level here</div>
+{% endfor %}
 {% endblock %}
 
 {% block right_panel %}

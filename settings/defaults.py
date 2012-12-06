@@ -245,6 +245,7 @@ INSTALLED_APPS = (
     "mezzanine.twitter",
     "mezzanine.accounts",
     "pipeline",
+    "jsonify",
     # "mezzanine.mobile",
 )
 

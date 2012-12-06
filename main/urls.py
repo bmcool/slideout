@@ -11,6 +11,9 @@ urlpatterns = patterns("",
     ("^login/", 'main.views.login'),
     ("^logout/", 'main.views.logout'),
     
+    ("^game/(?P<username>\w+)/$", 'main.views.game_member'),
+    ("^game/(?P<username>\w+)/(?P<level_id>\d+)/$", 'main.views.game_level'),
+    
     url("^$", 'main.views.home', name="home"),
     ("^admin/orderedmove/", include("order.urls")),
     ("^admin/", include(admin.site.urls)),
