@@ -49,7 +49,7 @@ def game_level(request, username, level_id):
     levels = levels.order_by("order")
     
     try:
-        level = levels.get(id=level_id)
+        current_level = levels.get(id=level_id)
     except Exception as e:
         return redirect('/game/' + current_member.user.username + '/')
     

@@ -37,10 +37,12 @@
     <div class="row">
         <div class="span3 left">
             <div class="panel">
+            {% block left_panel %}
             {% get_all_members_for as members %}
             {% for member in members %}
-                <a href="/game/{{ member.user.username }}/">{{ member.user.username }}</a>
+                <a href="/game/{{ member.user.username }}/" class="{% if member == current_member %}active{% endif %}">{{ member.user.username }}</a>
             {% endfor %}
+            {% endblock %}
             </div>
         </div>
         <div class="span6 middle">

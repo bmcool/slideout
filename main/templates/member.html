@@ -8,12 +8,21 @@
 {% endblock %}
 
 {% block main %}
-<h1>{{ current_member.user.username }}</h1>
+<div class="row-fluid">
+<div class="span12"><h1>Maker : {{ current_member.user.username }}</h1></div>
+</div>
+<div class="row">
 {% for level in levels %}
+<div class="span2">
+{{ forloop.counter }}
 <a href="/game/{{ current_member.user.username }}/{{ level.id }}/">{{ level.title }}</a>
+</div>
 {% empty %}
-<div class="alert">No Level here</div>
+<div class="span6">
+    <div class="alert">No Level here</div>
+</div>
 {% endfor %}
+</div>
 {% endblock %}
 
 {% block right_panel %}

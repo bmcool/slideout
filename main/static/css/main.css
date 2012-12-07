@@ -28,3 +28,7 @@ body, html {
     border-color: #333;
     color: #bbb;
 }
+
+a.active {
+    color: white;
+}
