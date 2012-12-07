@@ -1,0 +1,16 @@
+{% extends "scaffolding.html" %}
+{% load i18n mezzanine_tags %}
+
+{% block body_id %}account{% endblock %}
+
+{% block main %}
+<fieldset>
+    <form method="post">
+    {% fields_for form %}
+    <input class="btn btn-primary btn-large" type="submit" value="{{ title }}">
+    </form>
+</fieldset>
+{% endblock %}
+
+
+

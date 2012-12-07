@@ -18,7 +18,7 @@
                     <li><a href="{% url signup %}?next={{ request.path }}" >{% trans "Sign up" %}</a></li>
                 {% endif %}
                 
-                {% if request.user.is_superuser %}
+                {% if request.user.is_staff %}
                     <li><a href="/admin/">{% trans "Admin" %}</a></li>
                 {% endif %}
                 
