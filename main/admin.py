@@ -2,7 +2,7 @@ from django.contrib import admin
 from main.models import *
 
 class LevelAdmin(admin.ModelAdmin):
-    list_display = ("order", "published", "level", "order_link")
+    list_display = ("order", "title", "published", "order_link")
 
 admin.site.register(Level, LevelAdmin)
 # admin.site.register(Sprite)

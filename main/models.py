@@ -28,7 +28,6 @@ def level_upload_to(instance, filename):
 class Level(OrderedModel):
     owner = models.ForeignKey(Member)
     title = models.CharField(_("Title"), max_length=50)
-    description = models.TextField(_("Description"), max_length=300)
     level = models.FileField(verbose_name=_("Level"), upload_to=level_upload_to, help_text=_("upload your tmx level file that created by 'Tiled map editor'"))
     published = models.BooleanField(_("Published"), default=False)
     
