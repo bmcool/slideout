@@ -1,7 +1,7 @@
 (function() {
     TILE_SIZE = 32;
     MAP_SIZE = MAP_W = MAP_H = 16;
-    Crafty.sprite(TILE_SIZE, "/static/official/players/default.png", {
+    Crafty.sprite(TILE_SIZE, "/static/slideout/official/players/default.png", {
         player: [0, 0]
     });
     
@@ -290,8 +290,8 @@
     }
     
     main = function() {
-        generateSprites("/static/official/sprites/default.png");
-        Crafty.audio.add("normal", "/static/official/sounds/normal.mp3");
+        generateSprites("/static/slideout/official/sprites/default.png");
+        Crafty.audio.add("normal", "/static/slideout/official/sounds/normal.mp3");
         Crafty.audio.play("normal", -1);
         Crafty.init(TILE_SIZE * MAP_W, TILE_SIZE * MAP_H);
         

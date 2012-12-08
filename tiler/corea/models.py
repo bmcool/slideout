@@ -15,6 +15,7 @@ class Member(models.Model):
     user = models.OneToOneField(User)
     
     class Meta:
+        db_table = 'tiler_member'
         verbose_name = _("Member")
         verbose_name_plural = _("Members")
     
@@ -25,12 +26,14 @@ def level_upload_to(instance, filename):
     print "%s/%s/%s/%s.%s" % ("resource", instance.owner.user.username, "levels", str(time.time()), str(uuid.uuid4()))
     return "%s/%s/%s/%s.%s" % ("resource", instance.owner.user.username, "levels", str(time.time()), str(uuid.uuid4()))
 
-class Level(OrderedModel):
+class BaseLevel(OrderedModel):
     owner = models.ForeignKey(Member, editable=False)
     title = models.CharField(_("Title"), max_length=100, blank=True)
     level = models.FileField(verbose_name=_("Level"), upload_to=level_upload_to, help_text=_("upload your tmx level file that created by 'Tiled map editor'"))
-    published = models.BooleanField(_("Published"), default=False,
-        help_text=_("If not published, only you can view this level"))
+    published = models.BooleanField(_("Published"), default=False, help_text=_("If not published, only you can view this level"))
+    
+    class Meta:
+        abstract = True
     
     def __unicode__(self):
         return self.title

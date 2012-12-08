@@ -1,18 +1,17 @@
 from django.contrib import admin
 from django.utils.translation import ugettext, ugettext_lazy as _
 
-from main.models import *
-
-class LevelAdmin(admin.ModelAdmin):
+class BaseLevelAdmin(admin.ModelAdmin):
     list_display = ("order", "title", "published", "order_link")
     actions = ['published_reverse']
+    ordering = ["order"]
     
     def save_model(self, request, obj, form, change):
         obj.owner = request.user.member
         obj.save()
     
     def queryset(self, request):
-        qs = super(LevelAdmin, self).queryset(request)
+        qs = super(BaseLevelAdmin, self).queryset(request)
         return qs.filter(owner=request.user.member)
     
     def published_reverse(self, request, queryset):
@@ -20,5 +19,3 @@ class LevelAdmin(admin.ModelAdmin):
             level.published = not level.published
             level.save()
     published_reverse.short_description = _('Published/Unpublished the selected levels')
-
-admin.site.register(Level, LevelAdmin)

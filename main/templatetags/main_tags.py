@@ -1,5 +1,4 @@
-from main.models import *
-
+from tiler.corea.models import *
 
 from mezzanine import template
 register = template.Library()

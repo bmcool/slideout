@@ -3,7 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect
 from django.db import transaction
 
-from main.models import OrderedModel
+from order.models import OrderedModel
 
 @staff_member_required
 @transaction.commit_on_success

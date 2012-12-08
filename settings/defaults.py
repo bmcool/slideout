@@ -163,7 +163,7 @@ TEMPLATE_LOADERS = (
 
 AUTHENTICATION_BACKENDS = ("mezzanine.core.auth_backends.MezzanineBackend",)
 
-AUTH_PROFILE_MODULE = "main.Member"
+AUTH_PROFILE_MODULE = "corea.Member"
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -225,6 +225,8 @@ STATICFILES_DIRS = (
 
 INSTALLED_APPS = (
     "main",
+    "tiler.corea",
+    "slideout",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -360,7 +362,7 @@ elif sys.platform == 'win32':
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.join(PROJECT_ROOT, "database", APP_NAME) ,
+            "NAME": os.path.join(PROJECT_ROOT, "database", APP_NAME) + ".db",
             "USER": "",
             "PASSWORD": "",
             "HOST": "",
