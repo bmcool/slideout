@@ -24,21 +24,20 @@ SITE_TITLE = "Slide Out"
 
 # Controls the ordering and grouping of the admin menu.
 #
-# ADMIN_MENU_ORDER = (
-#     ("Content", ("pages.Page", "blog.BlogPost",
-#        "generic.ThreadedComment", ("Media Library", "fb_browse"),)),
-#     ("Site", ("sites.Site", "redirects.Redirect", "conf.Setting")),
-#     ("Users", ("auth.User", "auth.Group",)),
-# )
+ADMIN_MENU_ORDER = (
+    ("Content", ("pages.Page", "blog.BlogPost",
+       "generic.ThreadedComment", ("Media Library", "fb_browse"),)),
+    ("Site", ("sites.Site", "redirects.Redirect", "conf.Setting")),
+    ("Users", ("auth.User", "auth.Group",)),
+    ("Game", ("Levels", "main.Level",)),
+)
 
 # A three item sequence, each containing a sequence of template tags
 # used to render the admin dashboard.
 #
-# DASHBOARD_TAGS = (
-#     ("blog_tags.quick_blog", "mezzanine_tags.app_list"),
-#     ("comment_tags.recent_comments",),
-#     ("mezzanine_tags.recent_actions",),
-# )
+DASHBOARD_TAGS = (
+    ("blog_tags.quick_blog", "mezzanine_tags.app_list"),
+)
 
 # A sequence of templates used by the ``page_menu`` template tag. Each
 # item in the sequence is a three item sequence, containing a unique ID
@@ -300,7 +299,7 @@ OPTIONAL_APPS = (
     "debug_toolbar",
     "django_extensions",
     "compressor",
-    PACKAGE_NAME_FILEBROWSER,
+    # PACKAGE_NAME_FILEBROWSER,
     PACKAGE_NAME_GRAPPELLI,
 )
 

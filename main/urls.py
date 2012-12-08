@@ -10,12 +10,14 @@ admin.autodiscover()
 urlpatterns = patterns("",
     ("^login/", 'main.views.login'),
     ("^logout/", 'main.views.logout'),
+    ("^password_change/", 'main.views.password_change'),
     
     ("^game/(?P<username>\w+)/$", 'main.views.game_member'),
     ("^game/(?P<username>\w+)/(?P<level_id>\d+)/$", 'main.views.game_level'),
     
     url("^$", 'main.views.home', name="home"),
     ("^admin/orderedmove/", include("order.urls")),
+    ("^admin/login/", 'main.views.login'),
     ("^admin/", include(admin.site.urls)),
     url("^$", direct_to_template, {"template": "index.html"}, name="home"),
     ("^", include("mezzanine.urls")),

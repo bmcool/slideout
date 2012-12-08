@@ -7,7 +7,7 @@ class OrderedModel(models.Model):
     def save(self):
         if not self.id:
             try:
-                self.order = self.__class__.objects.all().order_by("-order")[0].order + 1
+                self.order = self.__class__.objects.filter(owner=self.owner).order_by("-order")[0].order + 1
             except IndexError:
                 self.order = 1
         super(OrderedModel, self).save()
@@ -25,12 +25,12 @@ class OrderedModel(models.Model):
     order_link.admin_order_field = 'order'
     
     @staticmethod
-    def move_down(model_type_id, model_id):
+    def move_down(member, model_type_id, model_id):
         try:
             ModelClass = ContentType.objects.get(id=model_type_id).model_class()
             
             lower_model = ModelClass.objects.get(id=model_id)
-            higher_model = ModelClass.objects.filter(order__gt=lower_model.order).order_by("order")[0]
+            higher_model = ModelClass.objects.filter(owner=member, order__gt=lower_model.order).order_by("order")[0]
             
             lower_model.order, higher_model.order = higher_model.order, lower_model.order
             
@@ -42,12 +42,12 @@ class OrderedModel(models.Model):
             pass
     
     @staticmethod
-    def move_up(model_type_id, model_id):
+    def move_up(member, model_type_id, model_id):
         try:
             ModelClass = ContentType.objects.get(id=model_type_id).model_class()
             
             higher_model = ModelClass.objects.get(id=model_id)
-            lower_model = ModelClass.objects.filter(order__lt=higher_model.order).order_by("-order")[0]
+            lower_model = ModelClass.objects.filter(owner=member, order__lt=higher_model.order).order_by("-order")[0]
             
             lower_model.order, higher_model.order = higher_model.order, lower_model.order
             

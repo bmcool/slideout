@@ -12,7 +12,7 @@ import uuid
 import time
 
 class Member(models.Model):
-    user = models.ForeignKey(User, unique=True)
+    user = models.OneToOneField(User)
     
     class Meta:
         verbose_name = _("Member")
@@ -26,10 +26,11 @@ def level_upload_to(instance, filename):
     return "%s/%s/%s/%s.%s" % ("resource", instance.owner.user.username, "levels", str(time.time()), str(uuid.uuid4()))
 
 class Level(OrderedModel):
-    owner = models.ForeignKey(Member)
-    title = models.CharField(_("Title"), max_length=50)
+    owner = models.ForeignKey(Member, editable=False)
+    title = models.CharField(_("Title"), max_length=100, blank=True)
     level = models.FileField(verbose_name=_("Level"), upload_to=level_upload_to, help_text=_("upload your tmx level file that created by 'Tiled map editor'"))
-    published = models.BooleanField(_("Published"), default=False)
+    published = models.BooleanField(_("Published"), default=False,
+        help_text=_("If not published, only you can view this level"))
     
     def __unicode__(self):
         return self.title
@@ -86,25 +87,3 @@ class Level(OrderedModel):
                 
         lvl["layers"] = layers
         return lvl
-
-# def sprite_upload_to(instance, filename):
-    # return "%s/%s/%s/%s.%s" % ("resource", instance.owner.user.username, "sprites", str(time.time), str(uuid.uuid4()))
-
-# class Sprite(models.Model):
-    # owner = models.ForeignKey(Member)
-    # sprite = models.FileField(verbose_name=_("Sprite"), upload_to=sprite_upload_to, help_text=_("upload your sprite that tile size is 32x32"))
-
-# def player_upload_to(instance, filename):
-    # return "%s/%s/%s/%s.%s" % ("resource", instance.owner.user.username, "players", str(time.time), str(uuid.uuid4()))
-
-# class Player(models.Model):
-    # owner = models.ForeignKey(Member)
-    # player = models.FileField(verbose_name=_("Player"), upload_to=player_upload_to, help_text=_("upload your player that tile size is 32x32"))
-
-# class MemberSprite(models.Model):
-    # member = models.ForeignKey(Member, unique=True)
-    # sprite = models.ForeignKey(Sprite)
-
-# class MemberPlayer(models.Model):
-    # member = models.ForeignKey(Member, unique=True)
-    # player = models.ForeignKey(Player)

@@ -1,0 +1,21 @@
+{% load i18n %}
+
+<div id="header">
+    <div class="row-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="span3 admin-title"><a href="/">Slide Out</a></div>
+                <div class="span3">
+                    <ul id="user-tools">
+                        <li>{% trans 'Welcome,' %}<strong>{% filter force_escape %}{% firstof user.first_name user.username %}{% endfilter %}</strong></li>
+                        {% if request.user.is_staff %}
+                        <li><a href="/admin/">{% trans 'Admin' %}</a></li>
+                        {% endif %}
+                        <li><a href="/password_change/">{% trans 'Change password' %}</a></li>
+                        <li><a href="/logout/">{% trans 'Log out' %}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

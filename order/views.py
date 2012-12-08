@@ -9,9 +9,9 @@ from main.models import OrderedModel
 @transaction.commit_on_success
 def admin_move_ordered_model(request, direction, model_type_id, model_id):
     if direction == "up":
-        OrderedModel.move_up(model_type_id, model_id)
+        OrderedModel.move_up(request.user.member, model_type_id, model_id)
     else:
-        OrderedModel.move_down(model_type_id, model_id)
+        OrderedModel.move_down(request.user.member, model_type_id, model_id)
     
     ModelClass = ContentType.objects.get(id=model_type_id).model_class()
     
